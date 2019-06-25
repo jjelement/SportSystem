@@ -1,0 +1,10 @@
+Version 4.0 - 14/02/2017
+
+   - Add 5 new home pages
+   - Add Pricing Tables page
+   - Add Register form page
+
+
+Version 3.0 - 14/01/2017
+
+   - Initial Release ( rebuild )
