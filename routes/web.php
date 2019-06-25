@@ -32,6 +32,8 @@ Route::group(['middleware' => 'auth.admin', 'prefix' => 'backend'], function() {
     Route::get('/event', 'Backend\EventController@index')->name('backend.event.index');
     Route::post('/event', 'Backend\EventController@store')->name('backend.event.store');
     Route::get('/event/create', 'Backend\EventController@create')->name('backend.event.create');
-    Route::get('/event/{event}', 'Backend\EventController@edit')->name('backend.event.edit');
+    Route::get('/event/{event}', 'Backend\EventController@show')->name('backend.event.show');
+    Route::get('/event/{event}/edit', 'Backend\EventController@edit')->name('backend.event.edit');
     Route::put('/event/{event}', 'Backend\EventController@update')->name('backend.event.update');
+    Route::delete('/event/{event}', 'Backend\EventController@delete')->name('backend.event.delete');
 });

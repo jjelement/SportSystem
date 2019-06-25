@@ -163,7 +163,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">Health Issue</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="healthIssue" name="healthIssue" class="form-control" required="" value="{{ $profile->healthIssue }}" placeholder="โรคประจำตัว">
+                                        <input type="text" id="healthIssue" name="healthIssue" class="form-control" value="{{ $profile->healthIssue }}" placeholder="โรคประจำตัว">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -182,19 +182,19 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">Emergency Contact Person</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="contactName" name="contactName" class="form-control" required="" placeholder="ชื่อผู้ติดต่อฉุกเฉิน">
+                                        <input type="text" id="contactName" name="contactName" class="form-control" placeholder="ชื่อผู้ติดต่อฉุกเฉิน">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">Contact Relationship</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="contactRelationship" name="contactRelationship" class="form-control" required="" placeholder="ความสัมพันธ์">
+                                        <input type="text" id="contactRelationship" name="contactRelationship" class="form-control" placeholder="ความสัมพันธ์">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">Emergency Phone Number</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="contactPhoneNumber" name="contactPhoneNumber" class="form-control" required="" placeholder="เบอร์ติดต่อฉุกเฉิน">
+                                        <input type="text" id="contactPhoneNumber" name="contactPhoneNumber" class="form-control" placeholder="เบอร์ติดต่อฉุกเฉิน">
                                     </div>
                                 </div>
                                 <div class="form-group">

@@ -15,7 +15,7 @@ class CreateUserAdminsTable extends Migration
     {
         Schema::create('user_admins', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id')->unsigned();
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
             $table->foreign('user_id')

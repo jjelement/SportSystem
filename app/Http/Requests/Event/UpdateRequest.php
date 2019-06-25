@@ -11,9 +11,8 @@ class UpdateRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
-    {
-        return false;
+    public function authorize() {
+        return true;
     }
 
     /**
@@ -21,10 +20,21 @@ class UpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            //
+            'profileImage'      => 'image',
+            'name'              => 'required|string',
+            'description'       => 'required|string',
+            'content'           => 'required|string',
+            'maxParticipants'   => '',
+            'startRegisterDate' => 'required|date',
+            'endRegisterDate'   => '',
+            'startDate'         => 'required|date|after:startRegisterDate',
+            'endDate'           => '',
+            'canWalkIn'         => 'required|boolean',
+            'shirtType'         => '',
+            'shirtSize'         => '',
+            'raceType'          => 'array',
         ];
     }
 }
