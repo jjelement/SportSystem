@@ -2,37 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40d11f2e-d214-4442-8bce-9390e4d4c25f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/backend/css/loading.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/backend/css/toastr.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/backend/js/fnReloadAjax.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/backend/js/toastr.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/backend/js/typeahead.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/backend/event/race-type.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/backend/event/show.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/EventController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/EventController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Event/CreateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Event/CreateRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Event/UpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Event/UpdateRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Event.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Event.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/RaceType.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/RaceType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_06_06_230944_create_events_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_06_06_230944_create_events_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_06_07_175723_create_user_race_types_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_06_07_195404_create_tickets_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_06_07_195404_create_tickets_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_06_07_195418_create_ticket_participants_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_06_07_195418_create_ticket_participants_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_06_23_185113_create_user_admins_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_06_23_185113_create_user_admins_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/event/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/event/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/event/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/event/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/event/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/event/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/layouts/javascript.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/layouts/javascript.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/backend/layouts/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/layouts/sidebar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/event-modal.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/event-modal.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/event.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/event.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,69 +31,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/backend/event/race-type.blade.php">
+        <entry file="file://$PROJECT_DIR$/resources/views/event.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
-              <folding>
-                <element signature="e#310#336#0#HTML" expanded="true" />
-                <element signature="e#378#404#0#HTML" expanded="true" />
-                <element signature="e#440#466#0#HTML" expanded="true" />
-                <element signature="e#986#1009#0#HTML" expanded="true" />
-              </folding>
+            <state relative-caret-position="85">
+              <caret line="26" column="31" lean-forward="true" selection-start-line="26" selection-start-column="31" selection-end-line="26" selection-end-column="31" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/views/backend/event/show.blade.php">
+        <entry file="file://$PROJECT_DIR$/resources/views/event-modal.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
-              <folding>
-                <element signature="e#1119#1145#0#HTML" expanded="true" />
-                <element signature="e#1745#1767#0#HTML" expanded="true" />
-                <element signature="e#859#880#0#HTML" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/backend/event/index.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="482">
-              <caret line="48" column="29" lean-forward="true" selection-start-line="31" selection-start-column="24" selection-end-line="48" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/backend/event/edit.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="567">
-              <caret line="124" column="11" selection-start-line="124" selection-start-column="11" selection-end-line="124" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Backend/EventController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="107">
-              <caret line="39" column="20" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
-              <folding>
-                <element signature="e#48#90#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Models/Event.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="34" column="45" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
+            <state relative-caret-position="519">
+              <caret line="229" column="85" selection-start-line="229" selection-start-column="85" selection-end-line="229" selection-end-column="85" />
             </state>
           </provider>
         </entry>
@@ -225,7 +146,6 @@
         <option value="$PROJECT_DIR$/resources/views/home.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/event.blade.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_06_07_195418_create_ticket_participants_table.php" />
-        <option value="$PROJECT_DIR$/resources/views/event-modal.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/backend/event/ticket-type.blade.php" />
         <option value="$PROJECT_DIR$/app/Models/RaceType.php" />
         <option value="$PROJECT_DIR$/app/Models/Event.php" />
@@ -235,6 +155,7 @@
         <option value="$PROJECT_DIR$/app/Http/Requests/Event/CreateRequest.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Backend/EventController.php" />
         <option value="$PROJECT_DIR$/resources/views/backend/event/show.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/event-modal.blade.php" />
       </list>
     </option>
   </component>
@@ -418,12 +339,12 @@
       <workItem from="1560043768268" duration="604000" />
       <workItem from="1560099207669" duration="147000" />
       <workItem from="1561309358945" duration="14841000" />
-      <workItem from="1561444071504" duration="16751000" />
+      <workItem from="1561444071504" duration="19313000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86910000" />
+    <option name="totallyTimeSpent" value="89472000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -719,20 +640,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/event.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="50" selection-start-line="11" selection-start-column="50" selection-end-line="11" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/event-modal.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="196" column="130" selection-start-line="196" selection-start-column="130" selection-end-line="196" selection-end-column="130" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/EventController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="561">
@@ -824,6 +731,20 @@
             <element signature="e#1745#1767#0#HTML" expanded="true" />
             <element signature="e#859#880#0#HTML" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/event.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="26" column="31" lean-forward="true" selection-start-line="26" selection-start-column="31" selection-end-line="26" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/event-modal.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="229" column="85" selection-start-line="229" selection-start-column="85" selection-end-line="229" selection-end-column="85" />
         </state>
       </provider>
     </entry>

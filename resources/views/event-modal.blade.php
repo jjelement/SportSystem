@@ -197,11 +197,37 @@
                                         <input type="text" id="contactPhoneNumber" name="contactPhoneNumber" class="form-control" placeholder="เบอร์ติดต่อฉุกเฉิน">
                                     </div>
                                 </div>
+                                @if($event->shirtType)
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3">Shirt Type</label>
+                                        <div class="col-sm-8">
+                                            <select name="shirtType" id="shirtType" class="form-control" required>
+                                                <option value="">--- Select Shirt Type ---</option>
+                                                @foreach(explode(',', $event->shirtType) as $shirtType)
+                                                    <option value="{{ $shirtType }}">{{ $shirtType }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                @endif
+                                @if($event->shirtSize)
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3">Shirt Size</label>
+                                        <div class="col-sm-8">
+                                            <select name="shirtSize" id="shirtSize" class="form-control" required>
+                                                <option value="">--- Select Shirt Size ---</option>
+                                                @foreach(explode(',', $event->shirtSize) as $shirtSize)
+                                                    <option value="{{ $shirtSize }}">{{ $shirtSize }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">Race Type</label>
                                     <div class="col-sm-8">
                                         <select name="raceTypeId" id="raceTypeId" class="form-control" required>
-                                            <option value=""></option>
+                                            <option value="">--- Select Race Type ---</option>
                                             @foreach($event->raceTypeList as $raceType)
                                                 <option value="{{ $raceType->id }}">{{ $raceType->name }} - {{ number_format($raceType->price) }} THB</option>
                                             @endforeach
