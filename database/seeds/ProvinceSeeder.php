@@ -11,6 +11,8 @@ class ProvinceSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('provinces')->truncate();
+
         \Illuminate\Support\Facades\DB::insert("INSERT INTO `provinces` (`id`, `code`, `name_th`, `name_en`, `geography_id`) VALUES
         (1, '10', 'กรุงเทพมหานคร', 'Bangkok', 2),
     (2, '11', 'สมุทรปราการ', 'Samut Prakan', 2),

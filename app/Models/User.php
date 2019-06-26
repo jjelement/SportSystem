@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\UserAdmin;
+use App\Models\UserAdmin;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable

@@ -8,7 +8,7 @@ use App\Models\Event;
 class HomeController extends Controller
 {
     public function renderPage() {
-        $events = Event::get();
+        $events = Event::orderBy('created_at', 'DESC')->get();
         return view('home', ['events' => $events]);
     }
 }

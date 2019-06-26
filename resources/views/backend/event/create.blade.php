@@ -104,6 +104,8 @@
                                 <textarea class="form-control summernote" id="content" name="content" rows="4">{!! old('content') !!}</textarea>
                             </div>
                         </div>
+
+                        @include('backend.event.race-type')
                     </div>
 
                     <footer class="panel-footer">

@@ -34,7 +34,7 @@ class UpdateRequest extends FormRequest
             'canWalkIn'         => 'required|boolean',
             'shirtType'         => '',
             'shirtSize'         => '',
-            'raceType'          => 'array',
+            'raceType'          => 'required|array',
         ];
     }
 }
