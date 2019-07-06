@@ -13,6 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/address/provinces', 'AddressController@getProvinces');
+Route::get('/address/area/{province}', 'AddressController@findAreaByProvince');
+Route::get('/address/district/{area}', 'AddressController@findDistrictByArea');

@@ -19,9 +19,11 @@
                                         <label class="btn btn-secondary active text-white">
                                             <input type="radio" name="deliveryMethod" autocomplete="off" checked value="post"> By post
                                         </label>
-                                        <label class="btn btn-secondary text-white">
-                                            <input type="radio" name="deliveryMethod" autocomplete="off" value="walk-in"> Walk In
-                                        </label>
+                                        @if($event->canWalkIn)
+                                            <label class="btn btn-secondary text-white">
+                                                <input type="radio" name="deliveryMethod" autocomplete="off" value="walk-in"> Walk In
+                                            </label>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -29,39 +31,53 @@
                             <div id="address-area">
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">Province</label>
-                                    <div class="col-sm-8">
-                                        <select name="province" id="province" class="form-control">
+                                    <div class="col-sm-9">
+                                        <select name="provinceId" id="provinceId" class="form-control" required>
+                                            <option value="">----- เลือกจังหวัด -----</option>
                                             @foreach($provinces as $province)
-                                                <option value="{{ $province->name_th }}" {!! $profile->province == $province->name_th ? 'selected' : '' !!}>
-                                                    {{ $province->name_th }} / {{ $province->name_en }}
+                                                <option value="{{ $province->id }}" {!! old('provinceId', $profile->district->province_id) == $province->id ? 'selected' : '' !!}>
+                                                    {{ $province->name }} / {{ ucfirst($province->name_en) }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">Area</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" id="district" name="area" placeholder="อำเภอ/เขต" class="form-control" required="" value="{{ $profile->area }}">
+                                    <div class="col-sm-9">
+                                        <select name="areaId" id="areaId" class="form-control" required>
+                                            <option value="">----- เลือกเขต/อำเภอ -----</option>
+                                            @foreach($provinces->find(old('provinceId', $profile->district->province_id))->areas as $area)
+                                                <option value="{{ $area->id }}" {!! old('areaId', $profile->district->area_id) == $area->id ? 'selected' : '' !!} data-postcode="{{ $area->postcode }}">
+                                                    {{ $area->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">District</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" id="area" name="district" placeholder="ตำบล/แขวง" class="form-control" required="" value="{{ $profile->district }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-3">House No. and Address</label>
-                                    <div class="col-sm-8">
-                                        <textarea name="address" id="address" class="form-control" rows="3" required>{{ $profile->address }}</textarea>
+                                    <div class="col-sm-9">
+                                        <select name="districtId" id="districtId" class="form-control" required>
+                                            <option value="">----- เลือกแขวง/ตำบล -----</option>
+                                            @foreach($provinces->find(old('provinceId', $profile->district->province_id))->districts()->where('area_id', old('areaId', $profile->district->area_id))->get() as $district)
+                                                <option value="{{ $district->id }}" {!! old('districtId', $profile->district_id) == $district->id ? 'selected' : '' !!}>
+                                                    {{ $district->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">Postal Code</label>
-                                    <div class="col-sm-8">
-                                        <input type="number" id="postalCode" name="postalCode" class="form-control" required="" value="{{ $profile->postalCode }}">
+                                    <div class="col-sm-9">
+                                        <input type="number" maxlength="5" id="postalCode" name="postalCode" class="form-control" required="" value="{{ old('postalCode', $profile->district->area->postcode) }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3">House No. and Address</label>
+                                    <div class="col-sm-9">
+                                        <textarea name="address" id="address" class="form-control" rows="3" required>{{ old('address', $profile->address) }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +104,7 @@
                     </div>
                     <div class="col-md-6" style="border-left: 1px solid #CCC;">
                         <div id="add-participant-box" style="display: none">
-                            <h4>
+                            <h4 id="info-header">
                                 Add Ticket
                             </h4>
                             <form action="#" id="add-ticket-form" class="form-horizontal padding-top-mini">
@@ -112,9 +128,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-sm-3">Passport No (ถ้ามี)</label>
+                                    <label class="control-label col-sm-3">ID Card / Passport No</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="passportNo" name="passportNo" class="form-control" value="{{ $profile->passportNo }}">
+                                        <input type="text" id="passportNo" name="passportNo" class="form-control" value="{{ $profile->passportNo }}" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -163,7 +179,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">Health Issue</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="healthIssue" name="healthIssue" class="form-control" required="" value="{{ $profile->healthIssue }}" placeholder="โรคประจำตัว">
+                                        <input type="text" id="healthIssue" name="healthIssue" class="form-control" value="{{ $profile->healthIssue }}" placeholder="โรคประจำตัว">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -182,26 +198,52 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">Emergency Contact Person</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="contactName" name="contactName" class="form-control" required="" placeholder="ชื่อผู้ติดต่อฉุกเฉิน">
+                                        <input type="text" id="contactName" name="contactName" class="form-control" placeholder="ชื่อผู้ติดต่อฉุกเฉิน">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">Contact Relationship</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="contactRelationship" name="contactRelationship" class="form-control" required="" placeholder="ความสัมพันธ์">
+                                        <input type="text" id="contactRelationship" name="contactRelationship" class="form-control" placeholder="ความสัมพันธ์">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">Emergency Phone Number</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="contactPhoneNumber" name="contactPhoneNumber" class="form-control" required="" placeholder="เบอร์ติดต่อฉุกเฉิน">
+                                        <input type="text" id="contactPhoneNumber" name="contactPhoneNumber" class="form-control" placeholder="เบอร์ติดต่อฉุกเฉิน">
                                     </div>
                                 </div>
+                                @if($event->shirtType)
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3">Shirt Type</label>
+                                        <div class="col-sm-8">
+                                            <select name="shirtType" id="shirtType" class="form-control" required>
+                                                <option value="">--- Select Shirt Type ---</option>
+                                                @foreach(explode(',', $event->shirtType) as $shirtType)
+                                                    <option value="{{ $shirtType }}">{{ $shirtType }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                @endif
+                                @if($event->shirtSize)
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3">Shirt Size</label>
+                                        <div class="col-sm-8">
+                                            <select name="shirtSize" id="shirtSize" class="form-control" required>
+                                                <option value="">--- Select Shirt Size ---</option>
+                                                @foreach(explode(',', $event->shirtSize) as $shirtSize)
+                                                    <option value="{{ $shirtSize }}">{{ $shirtSize }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">Race Type</label>
                                     <div class="col-sm-8">
                                         <select name="raceTypeId" id="raceTypeId" class="form-control" required>
-                                            <option value=""></option>
+                                            <option value="">--- Select Race Type ---</option>
                                             @foreach($event->raceTypeList as $raceType)
                                                 <option value="{{ $raceType->id }}">{{ $raceType->name }} - {{ number_format($raceType->price) }} THB</option>
                                             @endforeach
@@ -210,10 +252,10 @@
                                 </div>
                                 <input type="hidden" name="timestamp" id="timestamp" value="">
 
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-check"></i> OK
+                                <button type="submit" class="btn btn-info btn-sm ok-btn">
+                                    <i class="fa fa-check"></i> Save
                                 </button>
-                                <button type="button" class="btn btn-secondary cancel-btn">
+                                <button type="button" class="btn btn-secondary cancel-btn btn-sm">
                                     <i class="fa fa-ban"></i> Cancel
                                 </button>
                             </form>
@@ -223,8 +265,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> BUY TICKET !</button>
             </div>
         </div>
     </div>
@@ -233,6 +274,49 @@
 @push('javascript')
     <script>
         $(function() {
+            $('#provinceId').change(function() {
+                let val = $(this).val();
+                if(val) {
+                    $.get('/api/address/area/' + val, function(data) {
+                        $('#areaId option:not(:first-child)').remove();
+                        $('#districtId option:not(:first-child)').remove();
+
+                        $('#areaId').attr('disabled', false);
+                        $('#districtId').attr('disabled', true);
+
+                        let areas = data.map(function(area) {
+                            return '<option value="'+area.id+'" data-postcode="'+area.postcode+'">'+area.name+'</option>';
+                        });
+                        $('#areaId').append(areas.join(''));
+                    });
+                } else {
+                    $('#postalCode').val('');
+                    $('#areaId').val('').attr('disabled', true);
+                    $('#districtId').val('').attr('disabled', true);
+                }
+            });
+
+            $('#areaId').change(function() {
+                let val = $(this).val();
+                if(val) {
+                    let postcode = $(this).find('option:selected').data('postcode');
+                    $('#postalCode').val(postcode);
+                    $.get('/api/address/district/' + val, function(data) {
+                        $('#districtId option:not(:first-child)').remove();
+
+                        $('#districtId').attr('disabled', false);
+
+                        let districts = data.map(function(district) {
+                            return '<option value="'+district.id+'">'+district.name+'</option>';
+                        })
+                        $('#districtId').append(districts.join(''));
+                    });
+                } else {
+                    $('#postalCode').val('');
+                    $('#districtId').val('').attr('disabled', true);
+                }
+            });
+
             let hidePartBox = function() {
                 $('#add-participant-box').hide();
                 $('.add-part-btn').removeClass('disabled');
@@ -275,6 +359,7 @@
                                         if(key != 'raceType')
                                             $('#add-participant-box #' + key).val(response[key]);
                                     })
+                                    $('#info-header').html('Edit Participant: ' + response.firstName + ' ' + response.lastName);
                                     $('#add-participant-box').show();
                                     $('.add-part-btn').addClass('disabled');
                                 }
@@ -310,6 +395,7 @@
             $('.add-part-btn').click(function() {
                 if(!$(this).hasClass('disabled')) {
                     $(this).addClass('disabled');
+                    $('#info-header').html('Add Participant');
                     if($('.participant-table tbody tr').length) {
                         clearPartBox();
                     }

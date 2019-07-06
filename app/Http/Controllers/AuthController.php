@@ -7,6 +7,7 @@ use App\Models\Province;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -35,10 +36,7 @@ class AuthController extends Controller
             'tel'           => $request->tel,
             'tel2'          => $request->tel2,
             'gender'        => $request->gender,
-            'province'      => $request->province,
-            'area'          => $request->area,
-            'district'      => $request->district,
-            'postalCode'    => $request->postalCode,
+            'district_id'   => $request->districtId,
             'address'       => $request->address,
             'birthdate'     => $birthDate,
             'bloodType'     => $request->bloodType,

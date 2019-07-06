@@ -15,11 +15,14 @@ class CreateProvincesTable extends Migration
     {
         Schema::create('provinces', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('code');
-            $table->string('name_th');
-            $table->string('name_en');
-            $table->integer('geography_id');
-            $table->timestamps();
+            $table->string('code', 2);
+            $table->string('name', 150);
+            $table->string('name_en', 150);
+            $table->unsignedBigInteger('geography_id');
+
+            $table->foreign('geography_id')
+                ->references('id')->on('geographies')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

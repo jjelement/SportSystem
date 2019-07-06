@@ -57,9 +57,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-3">Passport No (ถ้ามี)</label>
+                        <label class="control-label col-sm-3">ID Card / Passport No</label>
                         <div class="col-sm-9">
-                            <input type="text" id="passportNo" name="passportNo" class="form-control" value="{{ old('passportNo') }}">
+                            <input type="text" id="passportNo" name="passportNo" class="form-control" value="{{ old('passportNo') }}" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -85,14 +85,14 @@
                         <div class="col-sm-4">
                             <select name="month" id="month" class="form-control">
                                 @foreach(range(1, 12) as $month)
-                                    <option value="{{ $month }}" {!! $day == old('month') ? 'selected' : '' !!}>{{ date('F', mktime(0, 0, 0, $month, 10)) }}</option>
+                                    <option value="{{ $month }}" {!! $month == old('month') ? 'selected' : '' !!}>{{ date('F', mktime(0, 0, 0, $month, 10)) }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-sm-2">
                             <select name="year" id="year" class="form-control">
-                                @foreach(range(date('Y'), date('Y')-100) as $year)
-                                    <option value="{{ $year }}" {!! $day == old('year') ? 'selected' : '' !!}>{{ $year }}</option>
+                                @foreach(range(date('Y')-4, date('Y')-100) as $year)
+                                    <option value="{{ $year }}" {!! $year == old('year') ? 'selected' : '' !!}>{{ $year }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -112,14 +112,12 @@
 
                     <div class="form-group">
                         <label class="control-label col-sm-3">Blood Type</label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-9">
                             <select id="bloodType" name="bloodType" class="form-control" required="">
                                 <option value="">กรุ๊ปเลือด</option>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="AB">AB</option>
-                                <option value="O">O</option>
-                                <option value="Unknown">Unknown</option>
+                                @foreach(['A', 'B', 'AB', 'O', 'Unknown'] as $bloodType)
+                                    <option value="{{ $bloodType }}" {{ old('bloodType') == $bloodType ? 'selected' : ''}}>{{ $bloodType }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -136,10 +134,11 @@
                     <div class="form-group">
                         <label class="control-label col-sm-3">Province</label>
                         <div class="col-sm-9">
-                            <select name="province" id="province" class="form-control">
+                            <select name="provinceId" id="provinceId" class="form-control" required>
+                                <option value="">----- เลือกจังหวัด -----</option>
                                 @foreach($provinces as $province)
-                                    <option value="{{ $province->name_th }}" {!! old('province') == $province->name_th ? 'selected' : '' !!}>
-                                        {{ $province->name_th }} / {{ $province->name_en }}
+                                    <option value="{{ $province->id }}" {!! old('provinceId') == $province->id ? 'selected' : '' !!}>
+                                        {{ $province->name }} / {{ ucfirst($province->name_en) }}
                                     </option>
                                 @endforeach
                             </select>
@@ -148,25 +147,43 @@
                     <div class="form-group">
                         <label class="control-label col-sm-3">Area</label>
                         <div class="col-sm-9">
-                            <input type="text" id="district" name="area" placeholder="อำเภอ/เขต" class="form-control" required="" value="{{ old('area') }}">
+                            <select name="areaId" id="areaId" class="form-control" required {{ !old('provinceId') ? 'disabled' : '' }}>
+                                <option value="">----- เลือกเขต/อำเภอ -----</option>
+                                @if(old('provinceId'))
+                                    @foreach($provinces->find(old('provinceId'))->areas as $area)
+                                        <option value="{{ $area->id }}" {!! old('areaId') == $area->id ? 'selected' : '' !!} data-postcode="{{ $area->postcode }}">
+                                            {{ $area->name }}
+                                        </option>
+                                    @endforeach
+                                @endif
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-3">District</label>
                         <div class="col-sm-9">
-                            <input type="text" id="area" name="district" placeholder="ตำบล/แขวง" class="form-control" required="" value="{{ old('district') }}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">House No. and Address</label>
-                        <div class="col-sm-9">
-                            <textarea name="address" id="address" class="form-control" rows="3" required>{{ old('address') }}</textarea>
+                            <select name="districtId" id="districtId" class="form-control" required {{ !old('areaId') ? 'disabled' : '' }}>
+                                <option value="">----- เลือกแขวง/ตำบล -----</option>
+                                @if(old('areaId'))
+                                    @foreach($provinces->find(old('provinceId'))->districts()->where('area_id', old('areaId'))->get() as $district)
+                                        <option value="{{ $district->id }}" {!! old('districtId') == $district->id ? 'selected' : '' !!}>
+                                            {{ $district->name }}
+                                        </option>
+                                    @endforeach
+                                @endif
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-3">Postal Code</label>
                         <div class="col-sm-9">
-                            <input type="number" maxlength="5" id="postalCode" name="postalCode" class="form-control" required="" value="{{ old('postalCode') }}">
+                            <input type="number" maxlength="5" id="postalCode" name="postalCode" class="form-control" required="" value="{{ old('postalCode') }}" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">House No. and Address</label>
+                        <div class="col-sm-9">
+                            <textarea name="address" id="address" class="form-control" rows="3">{{ old('address') }}</textarea>
                         </div>
                     </div>
 
@@ -178,7 +195,54 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 @endsection
+
+@push('javascript')
+    <script>
+        $(function() {
+            $('#provinceId').change(function() {
+                let val = $(this).val();
+                $('#postalCode').val('');
+                $('#areaId').val('').attr('disabled', true);
+                $('#districtId').val('').attr('disabled', true);
+
+                if(val) {
+                    $.get('/api/address/area/' + val, function(data) {
+                        $('#areaId option:not(:first-child)').remove();
+                        $('#districtId option:not(:first-child)').remove();
+
+                        $('#areaId').attr('disabled', false);
+
+                        let areas = data.map(function(area) {
+                            return '<option value="'+area.id+'" data-postcode="'+area.postcode+'">'+area.name+'</option>';
+                        });
+                        $('#areaId').append(areas.join(''));
+                    });
+                }
+            });
+
+            $('#areaId').change(function() {
+                let val = $(this).val();
+                $('#postalCode').val('');
+                $('#districtId').val('').attr('disabled', true);
+
+                if(val) {
+                    let postcode = $(this).find('option:selected').data('postcode');
+                    $('#postalCode').val(postcode);
+                    $.get('/api/address/district/' + val, function(data) {
+                        $('#districtId option:not(:first-child)').remove();
+
+                        $('#districtId').attr('disabled', false);
+
+                        let districts = data.map(function(district) {
+                            return '<option value="'+district.id+'">'+district.name+'</option>';
+                        })
+                        $('#districtId').append(districts.join(''));
+                    });
+                }
+            });
+        })
+    </script>
+@endpush

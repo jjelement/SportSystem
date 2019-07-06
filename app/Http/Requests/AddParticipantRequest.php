@@ -33,7 +33,7 @@ class AddParticipantRequest extends FormRequest
             'month' => 'required|between:1,12',
             'year' => 'required|integer',
             'tel' => 'required',
-            'healthIssue' => 'string',
+            'healthIssue' => '',
             'bloodType' => 'required|in:A,B,AB,O,Unknown',
             'contactName' => '',
             'contactRelationship' => '',

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserRaceTypesTable extends Migration
+class CreateSlidesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateUserRaceTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_race_types', function (Blueprint $table) {
+        Schema::create('slides', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('userId');
-            $table->unsignedInteger('raceTypeId');
-            $table->string('shirt_type')->nullable();
-            $table->string('shirt_size')->nullable();
+            $table->string('profileImage');
+            $table->string('title');
+            $table->string('description');
+            $table->string('link');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateUserRaceTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_race_types');
+        Schema::dropIfExists('slides');
     }
 }

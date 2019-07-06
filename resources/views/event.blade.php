@@ -9,7 +9,7 @@
                     <div class="titles no-margin">
                         <h4>{{ $event->name }}</h4>
                     </div>
-                    <img src="{{ asset($event->profileImage) }}" alt="" class="img-fluid">
+                    <img src="{{ asset('storage/'.$event->profileImage) }}" alt="" class="img-fluid">
                     <div class="info-panel">
                         <p>{{ $event->description }}</p>
                         <p>{!! $event->content !!}</p>

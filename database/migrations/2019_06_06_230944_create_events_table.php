@@ -26,8 +26,8 @@ class CreateEventsTable extends Migration
             $table->dateTime('endDate')->nullable();
             $table->boolean('isFeature');
             $table->boolean('canWalkIn');
-            $table->json('shirtType')->nullable();
-            $table->json('shirtSize')->nullable();
+            $table->text('shirtType')->nullable();
+            $table->text('shirtSize')->nullable();
             $table->timestamps();
         });
     }

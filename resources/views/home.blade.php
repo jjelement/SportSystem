@@ -23,7 +23,7 @@
                         <div class="item-gallery">
                             <div class="hover">
                                 <a href="{{ route('event', $event->id) }}">
-                                    <img src="{{ asset($event->profileImage) }}" alt="{{ $event->name }}" />
+                                    <img src="{{ asset('storage/'.$event->profileImage) }}" alt="{{ $event->name }}" />
                                 </a>
                             </div>
                             <div class="info-gallery text-center">

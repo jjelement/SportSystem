@@ -16,22 +16,22 @@
 <script src="{{ asset('assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js') }}"></script>
 <script src="{{ asset('assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js') }}"></script>
 <script src="{{ asset('assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js') }}"></script>
-<script src="{{ asset('js/typeahead.js') }}"></script>
+<script src="{{ asset('assets/backend/js/typeahead.js') }}"></script>
 <script src="{{ asset('assets/vendor/ios7-switch/ios7-switch.js') }}"></script>
-<script src="{{ asset('js/toastr.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/backend/js/toastr.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/vendor/summernote/summernote.js') }}"></script>
 
 <!-- Specific Page Vendor -->
 @stack('javascript')
 
 <!-- Theme Base, Components and Settings -->
-<script src="{{ asset('assets/javascripts/theme.js') }}"></script>
+<script src="{{ asset('assets/backend/javascripts/theme.js') }}"></script>
 
 <!-- Theme Custom -->
-<script src="{{ asset('assets/javascripts/theme.custom.js') }}"></script>
+<script src="{{ asset('assets/backend/javascripts/theme.custom.js') }}"></script>
 
 <!-- Theme Initialization Files -->
-<script src="{{ asset('assets/javascripts/theme.init.js') }}"></script>
+<script src="{{ asset('assets/backend/javascripts/theme.init.js') }}"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
