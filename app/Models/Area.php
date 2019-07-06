@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Province extends Model
+class Area extends Model
 {
     public function geography() {
         return $this->belongsTo(Geography::class);
     }
 
-    public function areas() {
-        return $this->hasMany(Area::class);
+    public function province() {
+        return $this->belongsTo(Province::class);
     }
 
     public function districts() {

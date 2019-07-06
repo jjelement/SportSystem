@@ -25,6 +25,12 @@
 							<span>Event</span>
 						</a>
 					</li>
+					<li>
+						<a href="{{ route('backend.slide.index') }}">
+							<i class="fa fa-image" aria-hidden="true"></i>
+							<span>Slide</span>
+						</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

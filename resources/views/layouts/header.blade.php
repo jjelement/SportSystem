@@ -15,7 +15,7 @@
                         <div class="container">
                             <ul class="sf-menu" id="menu">
                                 <li>
-                                    <a href="{{ route('home') }}">Events <i class="fa fa-home fa-lg ml-1"></i></a>
+                                    <a href="{{ route('home') }}">Home <i class="fa fa-home fa-lg ml-1"></i></a>
                                 </li>
                                 <li>
                                     <a href="{{ route('about-us') }}">About Us <i class="fa fa-users ml-1"></i></a>

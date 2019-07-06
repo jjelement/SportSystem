@@ -63,15 +63,34 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Blood Type</label>
+                        <div class="col-sm-9">
+                            <select id="bloodType" name="bloodType" class="form-control" required="">
+                                <option value="">กรุ๊ปเลือด</option>
+                                @foreach(['A', 'B', 'AB', 'O', 'Unknown'] as $bloodType)
+                                    <option value="{{ $bloodType }}" {{ old('bloodType', $profile->bloodType) == $bloodType ? 'selected' : ''}}>{{ $bloodType }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Health Issue</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="healthIssue" name="healthIssue" class="form-control" value="{{ old('healthIssue', $profile->healthIssue) }}">
+                        </div>
+                    </div>
                     <hr>
 
                     <div class="form-group">
                         <label class="control-label col-sm-3">Province</label>
                         <div class="col-sm-9">
-                            <select name="province" id="province" class="form-control">
+                            <select name="provinceId" id="provinceId" class="form-control" required>
+                                <option value="">----- เลือกจังหวัด -----</option>
                                 @foreach($provinces as $province)
-                                    <option value="{{ $province->name_th }}" {!! $profile->province == $province->name_th ? 'selected' : '' !!}>
-                                        {{ $province->name_th }} / {{ $province->name_en }}
+                                    <option value="{{ $province->id }}" {!! old('provinceId', $profile->district->province_id) == $province->id ? 'selected' : '' !!}>
+                                        {{ $province->name }} / {{ ucfirst($province->name_en) }}
                                     </option>
                                 @endforeach
                             </select>
@@ -80,25 +99,39 @@
                     <div class="form-group">
                         <label class="control-label col-sm-3">Area</label>
                         <div class="col-sm-9">
-                            <input type="text" id="district" name="area" placeholder="อำเภอ/เขต" class="form-control" required="" value="{{ $profile->area }}">
+                            <select name="areaId" id="areaId" class="form-control" required>
+                                <option value="">----- เลือกเขต/อำเภอ -----</option>
+                                @foreach($provinces->find(old('provinceId', $profile->district->province_id))->areas as $area)
+                                    <option value="{{ $area->id }}" {!! old('areaId', $profile->district->area_id) == $area->id ? 'selected' : '' !!} data-postcode="{{ $area->postcode }}">
+                                        {{ $area->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-3">District</label>
                         <div class="col-sm-9">
-                            <input type="text" id="area" name="district" placeholder="ตำบล/แขวง" class="form-control" required="" value="{{ $profile->district }}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">House No. and Address</label>
-                        <div class="col-sm-9">
-                            <textarea name="address" id="address" class="form-control" rows="3" required>{{ $profile->address }}</textarea>
+                            <select name="districtId" id="districtId" class="form-control" required>
+                                <option value="">----- เลือกแขวง/ตำบล -----</option>
+                                @foreach($provinces->find(old('provinceId', $profile->district->province_id))->districts()->where('area_id', old('areaId', $profile->district->area_id))->get() as $district)
+                                    <option value="{{ $district->id }}" {!! old('districtId', $profile->district_id) == $district->id ? 'selected' : '' !!}>
+                                        {{ $district->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-3">Postal Code</label>
                         <div class="col-sm-9">
-                            <input type="number" id="postalCode" name="postalCode" class="form-control" required="" value="{{ $profile->postalCode }}">
+                            <input type="number" maxlength="5" id="postalCode" name="postalCode" class="form-control" required="" value="{{ old('postalCode', $profile->district->area->postcode) }}" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">House No. and Address</label>
+                        <div class="col-sm-9">
+                            <textarea name="address" id="address" class="form-control" rows="3">{{ old('address', $profile->address) }}</textarea>
                         </div>
                     </div>
 
@@ -114,3 +147,52 @@
         </div>
     </div>
 @endsection
+
+
+@push('javascript')
+    <script>
+        $(function() {
+            $('#provinceId').change(function() {
+                let val = $(this).val();
+                $('#postalCode').val('');
+                $('#areaId').val('').attr('disabled', true);
+                $('#districtId').val('').attr('disabled', true);
+
+                if(val) {
+                    $.get('/api/address/area/' + val, function(data) {
+                        $('#areaId option:not(:first-child)').remove();
+                        $('#districtId option:not(:first-child)').remove();
+
+                        $('#areaId').attr('disabled', false);
+
+                        let areas = data.map(function(area) {
+                            return '<option value="'+area.id+'" data-postcode="'+area.postcode+'">'+area.name+'</option>';
+                        });
+                        $('#areaId').append(areas.join(''));
+                    });
+                }
+            });
+
+            $('#areaId').change(function() {
+                let val = $(this).val();
+                $('#postalCode').val('');
+                $('#districtId').val('').attr('disabled', true);
+
+                if(val) {
+                    let postcode = $(this).find('option:selected').data('postcode');
+                    $('#postalCode').val(postcode);
+                    $.get('/api/address/district/' + val, function(data) {
+                        $('#districtId option:not(:first-child)').remove();
+
+                        $('#districtId').attr('disabled', false);
+
+                        let districts = data.map(function(district) {
+                            return '<option value="'+district.id+'">'+district.name+'</option>';
+                        })
+                        $('#districtId').append(districts.join(''));
+                    });
+                }
+            });
+        })
+    </script>
+@endpush

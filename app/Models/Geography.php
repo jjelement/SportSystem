@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Province extends Model
+class Geography extends Model
 {
-    public function geography() {
-        return $this->belongsTo(Geography::class);
+    public function province() {
+        return $this->hasMany(Province::class);
     }
 
     public function areas() {

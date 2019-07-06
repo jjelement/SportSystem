@@ -12,7 +12,6 @@ class EventController extends Controller
 {
     public function index() {
         $events = Event::orderBy('id', 'DESC')->paginate();
-        $event = $events->first();
         return view('backend.event.index', ['events' => $events]);
     }
 
@@ -21,7 +20,8 @@ class EventController extends Controller
     }
 
     public function show(Event $event) {
-        return view('backend.event.show', ['event' => $event]);
+        $user = auth()->user();
+        return view('backend.event.show', ['event' => $event, 'user' => $user]);
     }
 
     public function edit(Event $event) {

@@ -26,10 +26,7 @@ class CreateUsersTable extends Migration
             $table->enum('gender', ['M', 'F']);
             $table->string('healthIssue')->nullable();
             $table->string('bloodType');
-            $table->string('province');
-            $table->string('area');
-            $table->string('district');
-            $table->string('postalCode');
+            $table->unsignedBigInteger('district_id');
             $table->text('address');
             $table->date('birthdate');
             $table->rememberToken();

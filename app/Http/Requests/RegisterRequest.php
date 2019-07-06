@@ -11,8 +11,7 @@ class RegisterRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
-    {
+    public function authorize() {
         return true;
     }
 
@@ -21,26 +20,25 @@ class RegisterRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            'username' => 'required|unique:users,username',
-            'password' => 'required|confirmed',
-            'email' => 'required|email|unique:users,email',
-            'firstName' => 'required',
-            'lastName' => 'required',
+            'username'   => 'required|unique:users,username',
+            'password'   => 'required|confirmed',
+            'email'      => 'required|email|unique:users,email',
+            'firstName'  => 'required',
+            'lastName'   => 'required',
             'passportNo' => '',
-            'gender' => 'required|in:M,F',
-            'tel' => 'required',
-            'tel2' => '',
-            'province' => 'required|exists:provinces,name_th',
-            'area' => 'required',
-            'district' => 'required',
-            'address' => 'required',
-            'postalCode' => 'required',
-            'day' => 'required|between:1,31',
-            'month' => 'required|between:1,12',
-            'year' => 'required|integer',
+            'gender'     => 'required|in:M,F',
+            'tel'        => 'required',
+            'tel2'       => '',
+            'provinceId' => 'required|exists:provinces,id',
+            'areaId'     => 'required|exists:areas,id',
+            'districtId' => 'required|exists:districts,id',
+            'address'    => 'required',
+            'postalCode' => 'required|exists:areas,postcode',
+            'day'        => 'required|between:1,31',
+            'month'      => 'required|between:1,12',
+            'year'       => 'required|integer',
         ];
     }
 }

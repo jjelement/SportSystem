@@ -1,7 +1,7 @@
 <div id="mobile-nav">
     <ul>
         <li>
-            <a href="{{ route('home') }}"><i class="fa fa-home fa-lg mr-1"></i> Event</a>
+            <a href="{{ route('home') }}"><i class="fa fa-home fa-lg mr-1"></i> Home</a>
         </li>
 
         <li>
