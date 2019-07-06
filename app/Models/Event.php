@@ -43,4 +43,17 @@ class Event extends Model
         return $this->hasManyThrough(TicketParticipant::class, Ticket::class);
     }
 
+    public function status() {
+        if($this->startRegisterDate->isFuture()) {
+            return 0;
+        } else if($this->endRegisterDate->isFuture()) {
+            return 1;
+        } else if($this->startDate->isFuture()) {
+            return 2;
+        } else if($this->endDate->isFuture()) {
+            return 3;
+        } else {
+            return 4;
+        }
+    }
 }
