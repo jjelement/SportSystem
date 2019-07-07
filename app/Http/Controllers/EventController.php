@@ -45,6 +45,10 @@ class EventController extends Controller
         $participants[$timestamp] = $participant;
 
         session()->put('event.'.$event->id.'.participants', $participants);
+        session()->put('event.'.$event->id.'.participants', $participants);
+        session()->put('event.'.$event->id.'.participants', $participants);
+        session()->put('event.'.$event->id.'.participants', $participants);
+        session()->put('event.'.$event->id.'.participants', $participants);
     }
 
     public function getParticipants(Request $request, Event $event) {
@@ -68,7 +72,7 @@ class EventController extends Controller
         if($participants) {
             $totalPrice = 0;
             $address = $request->get('address');
-            $district_id = $request->get('district_id');
+            $district_id = $request->get('districtId');
             $deliveryMethod = $request->get('deliveryMethod');
 
             $ticketParticipants = collect($participants)

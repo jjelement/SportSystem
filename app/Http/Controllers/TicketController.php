@@ -14,11 +14,7 @@ class TicketController extends Controller
     }
 
     public function viewTicket(Ticket $ticket) {
-        if(!$ticket->paymentDatetime) {
-            return view('ticket.show', ['ticket' => $ticket]);
-        } else {
-            return '';
-        }
+        return view('ticket.show', ['ticket' => $ticket]);
     }
 
     public function actionCancelTicket(Ticket $ticket) {
