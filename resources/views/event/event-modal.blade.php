@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <form action="{{ route('profile') }}" method="POST" class="form-horizontal padding-top-mini">
+                        <form action="{{ route('event.submit', $event->id) }}" id="submit-form" method="POST" class="form-horizontal padding-top-mini">
                             @csrf
                             <div class="form-group">
                                 <label class="control-label col-sm-3">Delivery Method</label>
@@ -77,16 +77,20 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-3">House No. and Address</label>
                                     <div class="col-sm-9">
-                                        <textarea name="address" id="address" class="form-control" rows="3" required>{{ old('address', $profile->address) }}</textarea>
+                                        <textarea name="address" id="address" class="form-control" rows="3">{{ old('address', $profile->address) }}</textarea>
                                     </div>
                                 </div>
                             </div>
 
                             <hr>
 
+                            <div id="participant-error" class="alert alert-danger" style="display: none;">
+                                <i class="fa fa-times"></i>
+                                กรุณาเพิ่มผู้เข้าร่วมงาน
+                            </div>
                             <table class="table participant-table">
                                 <thead>
-                                    <tr class="bg-info">
+                                    <tr class="bg-success">
                                         <th colspan="4" class="text-white">Participant(s)</th>
                                     </tr>
                                 </thead>
@@ -265,7 +269,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> BUY TICKET !</button>
+                <button type="button" class="btn btn-primary" id="submit-ticket-btn"><i class="fa fa-shopping-cart"></i> BUY TICKET !</button>
             </div>
         </div>
     </div>
@@ -274,6 +278,16 @@
 @push('javascript')
     <script>
         $(function() {
+            let editTimestamp = null;
+            $('#submit-ticket-btn').click(function () {
+                if($('.participant-table tbody tr').length) {
+                    $('#participant-error').hide();
+                    $('#submit-form').submit();
+                } else {
+                    $('#participant-error').show();
+                }
+            });
+
             $('#provinceId').change(function() {
                 let val = $(this).val();
                 if(val) {
@@ -330,7 +344,7 @@
 
             let getParticipant = function() {
                 $.ajax({
-                    url: "{{ route('event.get-participants') }}",
+                    url: "{{ route('event.get-participants', $event->id) }}",
                     method: "GET",
                     success: function(response) {
                         let totalPrice = 0;
@@ -342,7 +356,7 @@
                                 '    <td>' + participant.firstName + ' ' + participant.lastName + '</td>\n' +
                                 '    <td>' + participant.raceType.price + ' THB</td>\n' +
                                 '    <td>' +
-                                '       <button type="button" data-timestamp="' + key + '" class="edit-participant-btn btn btn-sm btn-warning text-white" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></button>' +
+                                '       <button type="button" data-timestamp="' + key + '" class="edit-participant-btn btn btn-sm btn-info text-white" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></button>' +
                                 '       <button type="button" data-timestamp="' + key + '" class="remove-participant-btn btn btn-sm btn-danger" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></button>' +
                                 '    </td>' +
                                 '</tr>';
@@ -350,9 +364,10 @@
                         $('.participant-table tbody').html(html.join(''));
 
                         $('.edit-participant-btn').unbind().click(function() {
-                            let timestamp = $(this).data('timestamp');
+                            editTimestamp = $(this).data('timestamp');
+                            let $tr = $(this).parent().parent();
                             $.ajax({
-                                url: "{{ route('event.get-participants') }}?timestamp=" + timestamp,
+                                url: "{{ route('event.get-participants', $event->id) }}?timestamp=" + editTimestamp,
                                 method: "GET",
                                 success: function(response) {
                                     Object.keys(response).forEach(function(key) {
@@ -362,6 +377,7 @@
                                     $('#info-header').html('Edit Participant: ' + response.firstName + ' ' + response.lastName);
                                     $('#add-participant-box').show();
                                     $('.add-part-btn').addClass('disabled');
+                                    $tr.addClass('bg-warning');
                                 }
                             })
                         });
@@ -371,11 +387,12 @@
                             if(!confirm('Are you sure to remove this participant ?')) return;
 
                             $.ajax({
-                                url: "{{ route('event.remove-participant') }}?timestamp=" + timestamp,
+                                url: "{{ route('event.remove-participant', $event->id) }}?timestamp=" + timestamp,
                                 method: "DELETE",
                                 data: { _token: "{{ csrf_token() }}" },
                                 complete: function() {
                                     getParticipant();
+                                    $('.cancel-btn').click();
                                 }
                             })
                         })
@@ -407,19 +424,22 @@
                 e.preventDefault();
                 let $form = $(this);
                 $.ajax({
-                    url: "{{ route('event.add-participant') }}",
+                    url: "{{ route('event.add-participant', $event->id) }}",
                     method: "POST",
                     data: $form.serialize(),
                     complete: function() {
                         getParticipant();
                         hidePartBox();
                         clearPartBox();
+                        $('.cancel-btn').click();
                     }
                 });
             })
 
             $('.cancel-btn').click(function() {
                 hidePartBox();
+                $('.participant-table tbody tr.bg-warning').removeClass('bg-warning');
+                editTimestamp = null;
             })
         })
     </script>

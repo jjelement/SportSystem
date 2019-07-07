@@ -40,6 +40,8 @@ class AddParticipantRequest extends FormRequest
             'contactPhoneNumber' => '',
             'raceTypeId' => '',
             'timestamp' => '',
+            'shirtType' => '',
+            'shirtSize' => '',
         ];
     }
 }

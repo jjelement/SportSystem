@@ -42,8 +42,23 @@
                             </p>
                             <p>
                                 <strong><i class="fa fa-"></i> Status :</strong>
-
-                                <small class="bg-success text-white px-2 py-1">เปิดรับสมัคร</small>
+                                @switch($event->status())
+                                    @case(0)
+                                        <small class="bg-secondary text-white px-2 py-1">ยังไม่เปิดรับสมัคร</small>
+                                        @break
+                                    @case(1)
+                                        <small class="bg-success text-white px-2 py-1">กำลังเปิดรับสมัคร</small>
+                                        @break
+                                    @case(2)
+                                        <small class="bg-danger text-white px-2 py-1">ปิดรับสมัครแล้ว</small>
+                                        @break
+                                    @case(3)
+                                        <small class="bg-warning text-white px-2 py-1">อยู่ในช่วงอีเว้นท์</small>
+                                        @break
+                                    @case(4)
+                                        <small class="bg-info text-white px-2 py-1">จบอีเว้นท์</small>
+                                        @break
+                                @endswitch
                             </p>
                         </div>
                     </div>
@@ -63,29 +78,33 @@
                             @endforeach
                         </tbody>
                     </table>
+                    @if($event->status() == 1)
                     <button class="btn btn-block btn-success rounded-0 btn-lg" data-toggle="modal" data-target="#buyModal">BUY !</button>
+                    @endif
                 </div>
             </aside>
         </div>
     </div>
 
-    @if(auth()->check())
-        @include('event-modal')
-    @else
-        <div class="modal fade" tabindex="-1" role="dialog" id="buyModal" style="z-index: 9999">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title">Please login to join event!</h3>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-footer">
-                        <a type="button" class="btn btn-success" href="{{ route('sign-in', ['ref' => url()->current()]) }}">Go to LOGIN <i class="fa fa-sign-in"></i></a>
+    @if($event->status() == 1)
+        @if(auth()->check())
+            @include('event.event-modal')
+        @else
+            <div class="modal fade" tabindex="-1" role="dialog" id="buyModal" style="z-index: 9999">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Please login to join event!</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-footer">
+                            <a type="button" class="btn btn-success" href="{{ route('sign-in', ['ref' => url()->current()]) }}">Go to LOGIN <i class="fa fa-sign-in"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
     @endif
 @endsection

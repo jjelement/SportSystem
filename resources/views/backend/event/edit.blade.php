@@ -55,9 +55,9 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
-                                    <input type="text" class="form-control" name="startRegisterDate" value="{{ old('startRegisterDate', $event->startRegisterDate) }}" required>
+                                    <input type="text" class="form-control" name="startRegisterDate" value="{{ old('startRegisterDate', $event->startRegisterDate->format('Y-m-d')) }}" required>
                                     <span class="input-group-addon">ถึง</span>
-                                    <input type="text" class="form-control" name="endRegisterDate" value="{{ old('endRegisterDate', $event->endRegisterDate) }}">
+                                    <input type="text" class="form-control" name="endRegisterDate" value="{{ old('endRegisterDate', $event->endRegisterDate->format('Y-m-d')) }}">
                                 </div>
                             </div>
                         </div>
@@ -69,9 +69,9 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
-                                    <input type="text" class="form-control" name="startDate" value="{{ old('startDate', $event->startDate) }}" required>
+                                    <input type="text" class="form-control" name="startDate" value="{{ old('startDate', $event->startDate->format('Y-m-d')) }}" required>
                                     <span class="input-group-addon">ถึง</span>
-                                    <input type="text" class="form-control" name="endDate" value="{{ old('endDate', $event->endDate) }}">
+                                    <input type="text" class="form-control" name="endDate" value="{{ old('endDate', $event->endDate->format('Y-m-d')) }}">
                                 </div>
                             </div>
                         </div>

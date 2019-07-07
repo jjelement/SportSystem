@@ -31,6 +31,12 @@
 							<span>Slide</span>
 						</a>
 					</li>
+					<li>
+						<a href="{{ route('backend.config.index') }}">
+							<i class="fa fa-cog" aria-hidden="true"></i>
+							<span>Config</span>
+						</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

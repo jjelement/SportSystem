@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet" media="screen">
+<link href="{{ asset('css/custom.css') }}" rel="stylesheet" media="screen">
 
 <link rel="shortcut icon" href="{{ asset('assets/img/icons/favicon.ico') }}">
 <link rel="apple-touch-icon" href="{{ asset('assets/img/icons/apple-touch-icon.png') }}">

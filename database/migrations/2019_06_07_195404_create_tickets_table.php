@@ -17,6 +17,12 @@ class CreateTicketsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('event_id');
+            $table->string('deliveryMethod');
+            $table->unsignedBigInteger('district_id')->nullable();
+            $table->text('address')->nullable();
+            $table->decimal('price');
+            $table->string('paymentMethod')->nullable();
+            $table->dateTime('paymentDatetime')->nullable();
             $table->timestamps();
 
 
@@ -26,6 +32,10 @@ class CreateTicketsTable extends Migration
 
             $table->foreign('event_id')
                 ->references('id')->on('events')
+                ->onUpdate('cascade')->onDelete('cascade');
+
+            $table->foreign('district_id')
+                ->references('id')->on('districts')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
     }

@@ -26,6 +26,9 @@
                                         <a href="#">{{ auth()->user()->username }} <i class="fa fa-user ml-1"></i></a>
                                         <ul class="sub-current">
                                             <li>
+                                                <a href="{{ route('ticket') }}">History <i class="fa fa-list ml-1"></i></a>
+                                            </li>
+                                            <li>
                                                 <a href="{{ route('profile') }}">Profile <i class="fa fa-pencil ml-1"></i></a>
                                             </li>
                                             <li>

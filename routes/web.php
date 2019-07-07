@@ -3,10 +3,7 @@
 Route::get('/', 'HomeController@renderPage')->name('home');
 Route::get('/home', 'HomeController@renderPage');
 Route::get('/about-us', 'AboutUsController@renderPage')->name('about-us');
-Route::post('/event/participant', 'EventController@addParticipant')->name('event.add-participant');
-Route::get('/event/participants', 'EventController@getParticipants')->name('event.get-participants');
-Route::delete('/event/participant', 'EventController@removeParticipant')->name('event.remove-participant');
-Route::get('/event/{event}', 'EventController@eventDetailPage')->name('event');
+Route::get('/event/{event}', 'EventController@eventDetailPage')->name('event.show');
 
 Route::group(['middleware' => 'guest'], function() {
     Route::get('/sign-in', 'AuthController@loginPage')->name('sign-in');
@@ -24,6 +21,18 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/profile', 'ProfileController@renderPage')->name('profile');
     Route::post('/profile', 'ProfileController@saveProfile')->name('profile');
+
+    Route::post('/event/{event}/participant', 'EventController@addParticipant')->name('event.add-participant');
+    Route::get('/event/{event}/participants', 'EventController@getParticipants')->name('event.get-participants');
+    Route::delete('/event/{event}/participant', 'EventController@removeParticipant')->name('event.remove-participant');
+
+    Route::post('/event/{event}', 'EventController@actionSubmitTicket')->name('event.submit');
+
+
+    Route::get('/ticket', 'TicketController@viewTicketHistory')->name('ticket');
+    Route::get('/ticket/{ticket}', 'TicketController@viewTicket')->name('ticket.show');
+    Route::post('/ticket/{ticket}', 'TicketController@actionChoosePaymentMethod')->name('ticket.choose-method');
+    Route::delete('/ticket/{ticket}', 'TicketController@actionCancelTicket')->name('ticket.remove');
 });
 
 Route::group(['middleware' => 'auth.admin', 'prefix' => 'backend'], function() {
@@ -43,4 +52,8 @@ Route::group(['middleware' => 'auth.admin', 'prefix' => 'backend'], function() {
     Route::get('/slide/{slide}/edit', 'Backend\SlideController@edit')->name('backend.slide.edit');
     Route::put('/slide/{slide}', 'Backend\SlideController@update')->name('backend.slide.update');
     Route::delete('/slide/{slide}', 'Backend\SlideController@delete')->name('backend.slide.delete');
+
+    Route::get('/config', 'Backend\ConfigController@index')->name('backend.config.index');
+    Route::get('/config/{config}/edit', 'Backend\ConfigController@edit')->name('backend.config.edit');
+    Route::put('/config/{config}', 'Backend\ConfigController@update')->name('backend.config.update');
 });
