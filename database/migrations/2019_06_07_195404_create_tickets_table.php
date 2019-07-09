@@ -35,10 +35,6 @@ class CreateTicketsTable extends Migration
             $table->foreign('event_id')
                 ->references('id')->on('events')
                 ->onUpdate('cascade')->onDelete('cascade');
-
-            $table->foreign('district_id')
-                ->references('id')->on('districts')
-                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

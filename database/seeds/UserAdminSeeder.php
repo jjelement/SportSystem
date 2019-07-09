@@ -27,7 +27,7 @@ class UserAdminSeeder extends Seeder
             'bloodType' => 'AB',
             'province' => 'กรุงเทพมหานคร',
             'area' => 'จตุจักร',
-            'district' => 'ลาดยาว',
+            'district_id' => 'ลาดยาว',
             'postalCode' => '10900',
             'address' => '123/45',
             'birthdate' => '1990-11-11',
