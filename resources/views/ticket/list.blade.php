@@ -41,10 +41,10 @@
                             {{ number_format($ticket->price) }} Baht
                         </td>
                         <td>
-                            @if($ticket->transaction)
+                            @if($ticket->paymentDatetime)
                                 <small class="bg-success px-2 py-1 text-white">ชำระเงินแล้ว</small>
                             @elseif($ticket->isExpired())
-                                <small class="bg-danger px-2 py-1 text-white">หมดอายุ</small>
+                                <small class="bg-secondary px-2 py-1 text-white">หมดอายุ</small>
                             @else
                                 <small class="bg-danger px-2 py-1 text-white">ยังไม่ชำระเงิน</small>
                             @endif
@@ -53,7 +53,7 @@
                             <a href="{{ route('ticket.show', $ticket->id) }}" class="btn btn-info btn-sm">
                                 <i class="fa fa-search"></i> View
                             </a>
-                            @if(!$ticket->transaction)
+                            @if(!$ticket->paymentDatetime)
                                 <form action="{{ route('ticket.remove', $ticket->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure to cancel this ticket ?')">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">

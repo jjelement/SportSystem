@@ -1,5 +1,5 @@
 @extends('layouts.template')
-@inject('Transaction', 'App\Models\Transaction')
+@inject('Ticket', 'App\Models\Ticket')
 @section('content')
     <div class="container paddings">
         <!-- Content Text-->
@@ -53,10 +53,10 @@
                             <p>
                                 <b>Status</b>
                                 <span>
-                                    @if($ticket->transaction)
+                                    @if($ticket->paymentDatetime)
                                         <small class="bg-success px-2 py-1 text-white">ชำระเงินแล้ว</small>
                                     @elseif($ticket->isExpired())
-                                        <small class="bg-danger px-2 py-1 text-white">หมดอายุ</small>
+                                        <small class="bg-secondary px-2 py-1 text-white">หมดอายุ</small>
                                     @else
                                         <small class="bg-danger px-2 py-1 text-white">ยังไม่ชำระเงิน</small>
                                     @endif
@@ -67,17 +67,17 @@
                             <p>
                                 <b>Payment Method</b>
                                 <span>
-                                    @switch(session()->get('payment_method'))
-                                        @case($Transaction::METHOD_CREDIT_CARD)
+                                    @switch($ticket->paymentMEthod)
+                                        @case($Ticket::METHOD_CREDIT_CARD)
                                             Credit Card
                                         @break
-                                        @case($Transaction::METHOD_QR_CODE)
+                                        @case($Ticket::METHOD_QR_CODE)
                                             QR Code
                                         @break
-                                        @case($Transaction::METHOD_IBANKING)
+                                        @case($Ticket::METHOD_IBANKING)
                                             Internet Banking
                                         @break
-                                        @case($Transaction::METHOD_TRANSFER)
+                                        @case($Ticket::METHOD_TRANSFER)
                                             Transfer
                                         @break
                                         @default
@@ -91,8 +91,8 @@
                             <p>
                                 <b>Payment Date</b>
                                 <span>
-                                    @if($ticket->transaction)
-                                        {{ $ticket->transaction->created_at->format('d F Y H:i') }}
+                                    @if($ticket->paymentDatetime)
+                                        {{ $ticket->paymentDatetime->format('d F Y H:i') }}
                                     @else
                                         -
                                     @endif
@@ -140,7 +140,7 @@
             </div>
         </div>
 
-        @if(!$ticket->transaction && !$ticket->isExpired())
+        @if(!$ticket->paymentDatetime && !$ticket->isExpired())
             @include('ticket.payment')
         @endif
     </div>

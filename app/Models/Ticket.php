@@ -7,7 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
-    protected $fillable = ['user_id', 'event_id', 'deliveryMethod', 'district_id', 'address', 'price', 'creditCardTransactionId', 'qrCodeTransactionId'];
+    protected $fillable = ['user_id', 'event_id', 'deliveryMethod', 'district_id', 'address', 'price', 'creditCardTransactionId', 'qrCodeTransactionId', 'paymentMethod', 'paymentDatetime'];
+
+    protected $dates = ['paymentDatetime'];
+
+    const METHOD_CREDIT_CARD = 'credit_card';
+    const METHOD_QR_CODE = 'qr_code';
+    const METHOD_IBANKING = 'ibanking';
+    const METHOD_TRANSFER = 'transfer';
 
     public function ticketParticipants() {
         return $this->hasMany(TicketParticipant::class);
@@ -37,10 +44,6 @@ class Ticket extends Model
         return $this->district->area->postcode;
     }
 
-    public function transaction() {
-        return $this->hasOne(Transaction::class);
-    }
-
     public function getLinkPayment($type) {
         if($type == 'credit_card' || $type == 'qr_code') {
             $api = new Api();
@@ -65,7 +68,7 @@ class Ticket extends Model
     }
 
     public function isExpired() {
-        return $this->created_at->diffInHours(now()) >= 1;
+        return $this->created_at->diffInHours(now(), false) >= 1;
     }
 
     private function getLinkPaymentData($transactionId) {
@@ -78,7 +81,7 @@ class Ticket extends Model
 
     private function getCreateTransactionData() {
         $user = auth()->user();
-        $method = session()->get('payment_method');
+        $method = $this->paymentMethod;
         $url = route('ticket.show', $this->id);
         $address = [
             $this->district->name,
@@ -95,7 +98,7 @@ class Ticket extends Model
             'phone' => $user->tel,
             'amount' => $this->price,
             'address' => implode(' ', $address),
-            'order_id' => ((int)$method == Transaction::METHOD_QR_CODE).$ticket->id,
+            'order_id' => ((int)$method == self::METHOD_QR_CODE).$this->id,
             'payment_type' => $method,
             'success_Url' => $url,
             'fail_Url' => $url,

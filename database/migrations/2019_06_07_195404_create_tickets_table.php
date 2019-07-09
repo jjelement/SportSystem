@@ -23,6 +23,9 @@ class CreateTicketsTable extends Migration
             $table->text('address')->nullable();
             $table->string('qrCodeTransactionId')->nullable();
             $table->string('creditCardTransactionId')->nullable();
+            $table->string('paymentMethod')->nullable();
+            $table->dateTime('paymentDatetime')->nullable();
+            $table->string('paymentStatus')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')
