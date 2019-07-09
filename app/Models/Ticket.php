@@ -57,6 +57,7 @@ class Ticket extends Model
                 $data = $this->getCreateTransactionData();
                 $result = $api->CreatePayment($data);
                 $result = json_decode($result);
+                dd($result);
                 $this->update([
                     'creditCardTransactionId' => $result['link_payment']
                 ]);

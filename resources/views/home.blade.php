@@ -23,7 +23,7 @@
                     <h3 class="clear-title"><i class="fa fa-list"></i> Events</h3>
                     <div class="row portfolioContainer">
                         @foreach($events as $event)
-                            <div class="col-sm-6 soccer">
+                            <div class="col-12 soccer">
                                 <div class="item-gallery">
                                     <div class="hover">
                                         <a href="{{ route('event.show', $event->id) }}">
