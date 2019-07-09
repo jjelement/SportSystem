@@ -1,7 +1,7 @@
 @inject('Ticket', 'App\Models\Ticket')
 <div class="panel-box block-form mt-4">
     <div class="titles mb-1">
-        <h4>{{ Str::title(str_replace('_', ' ', $ticket->paymentMethod ?: 'Payment')) }}</h4>
+        <h4>Payment</h4>
     </div>
     <div class="info-panel">
         @if(!$ticket->paymentMethod)
@@ -25,10 +25,18 @@
         @else
             @switch($ticket->paymentMethod)
                 @case($Ticket::METHOD_CREDIT_CARD)
-{{--                    <a href="{{ $ticket->getLinkPayment($Ticket::METHOD_CREDIT_CARD) }}"></a>--}}
+                    <div class="text-center mb-4">
+                        <a href="{{ $ticket->getLinkPayment($Ticket::METHOD_CREDIT_CARD) }}" target="_blank" class="btn btn-outline-primary btn-lg" style="border: 1px solid">
+                            > <img src="{{ asset('assets/img/payments.png') }}" alt="" style="display: inline"> <
+                        </a>
+                    </div>
                 @break
                 @case($Ticket::METHOD_QR_CODE)
-{{--                    <a href="{{ $ticket->getLinkPayment($Ticket::METHOD_QR_CODE) }}"></a>--}}
+                <div class="text-center mb-4">
+                    <a href="{{ $ticket->getLinkPayment($Ticket::METHOD_QR_CODE) }}" target="_blank" class="btn btn-outline-primary btn-lg" style="border: 1px solid">
+                        > SCAN QR CODE <
+                    </a>
+                </div>
                 @break
                 @case($Ticket::METHOD_IBANKING)
                 @break

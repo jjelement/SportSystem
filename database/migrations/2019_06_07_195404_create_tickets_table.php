@@ -21,8 +21,6 @@ class CreateTicketsTable extends Migration
             $table->decimal('price');
             $table->unsignedBigInteger('district_id')->nullable();
             $table->text('address')->nullable();
-            $table->string('qrCodeTransactionId')->nullable();
-            $table->string('creditCardTransactionId')->nullable();
             $table->string('paymentMethod')->nullable();
             $table->dateTime('paymentDatetime')->nullable();
             $table->string('paymentStatus')->nullable();

@@ -52,6 +52,9 @@
                         <td>
                             <a href="{{ route('ticket.show', $ticket->id) }}" class="btn btn-info btn-sm">
                                 <i class="fa fa-search"></i> View
+                                @if(!$ticket->paymentDatetime && !$ticket->isExpired())
+                                    / Payment
+                                @endif
                             </a>
                             @if(!$ticket->paymentDatetime)
                                 <form action="{{ route('ticket.remove', $ticket->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure to cancel this ticket ?')">

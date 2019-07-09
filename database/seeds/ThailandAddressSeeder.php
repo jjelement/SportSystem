@@ -22,7 +22,7 @@ class ThailandAddressSeeder extends Seeder
         Province::truncate();
         Geography::truncate();
 
-        $query = file_get_contents(storage_path('app/thailand.sql'));
+        $query = file_get_contents(base_path('data/seeds/thailand.sql'));
         DB::unprepared($query);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

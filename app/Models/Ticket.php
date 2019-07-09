@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
-    protected $fillable = ['user_id', 'event_id', 'deliveryMethod', 'district_id', 'address', 'price', 'creditCardTransactionId', 'qrCodeTransactionId', 'paymentMethod', 'paymentDatetime'];
+    protected $fillable = ['user_id', 'event_id', 'deliveryMethod', 'district_id', 'address', 'price', 'paymentMethod', 'paymentDatetime', 'paymentStatus'];
 
     protected $dates = ['paymentDatetime'];
 
@@ -47,23 +47,11 @@ class Ticket extends Model
     public function getLinkPayment($type) {
         if($type == 'credit_card' || $type == 'qr_code') {
             $api = new Api();
-            $result = null;
-            $transactionId = $type == 'credit_card' ? $this->creditCardTransactionId : $this->qrCodeTransactionId;
-            if($transactionId) {
-                $data = $this->getLinkPaymentData($transactionId);
-                $result = $api->OpenPayment($data);
-                $result = json_decode($result);
-            } else {
-                $data = $this->getCreateTransactionData();
-                $result = $api->CreatePayment($data);
-                $result = json_decode($result);
-                dd($result);
-                $this->update([
-                    'creditCardTransactionId' => $result['link_payment']
-                ]);
-            }
-            if(isset($result['link_payment']))
-                return $result['link_payment'];
+            $data = $this->getCreateTransactionData();
+            $result = $api->CreatePayment($data);
+            $result = json_decode($result)[0];
+            if(isset($result->link_payment))
+                return $result->link_payment;
         }
         return null;
     }
@@ -76,13 +64,13 @@ class Ticket extends Model
         return [
             'secret_id' => config('payment.secret_id'),
             'secret_key' => config('payment.secret_key'),
-            'transaction_id' => $transactionId,
+            'transaction_ID' => $transactionId,
         ];
     }
 
     private function getCreateTransactionData() {
         $user = auth()->user();
-        $method = $this->paymentMethod;
+        $method = $this->paymentMethod == 'credit_card' ? 'card' : 'qrprom';
         $url = route('ticket.show', $this->id);
         $address = [
             $this->district->name,
@@ -99,7 +87,7 @@ class Ticket extends Model
             'phone' => $user->tel,
             'amount' => $this->price,
             'address' => implode(' ', $address),
-            'order_id' => ((int)$method == self::METHOD_QR_CODE).$this->id,
+            'order_id' => ((int)$method == self::METHOD_QR_CODE).'_'.$this->id.'_'.now(),
             'payment_type' => $method,
             'success_Url' => $url,
             'fail_Url' => $url,
