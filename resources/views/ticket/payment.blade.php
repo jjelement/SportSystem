@@ -25,10 +25,10 @@
         @else
             @switch($ticket->paymentMethod)
                 @case($Ticket::METHOD_CREDIT_CARD)
-                    <a href="{{ $ticket->getLinkPayment($Ticket::METHOD_CREDIT_CARD) }}"></a>
+{{--                    <a href="{{ $ticket->getLinkPayment($Ticket::METHOD_CREDIT_CARD) }}"></a>--}}
                 @break
                 @case($Ticket::METHOD_QR_CODE)
-                    <a href="{{ $ticket->getLinkPayment($Ticket::METHOD_QR_CODE) }}"></a>
+{{--                    <a href="{{ $ticket->getLinkPayment($Ticket::METHOD_QR_CODE) }}"></a>--}}
                 @break
                 @case($Ticket::METHOD_IBANKING)
                 @break

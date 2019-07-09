@@ -5,6 +5,9 @@ Route::get('/home', 'HomeController@renderPage');
 Route::get('/about-us', 'AboutUsController@renderPage')->name('about-us');
 Route::get('/event/{event}', 'EventController@eventDetailPage')->name('event.show');
 Route::post('/webhook', 'PaymentController@actionWebhook');
+Route::get('/test/payment/{ticket}', function(\App\Models\Ticket $ticket) {
+    dd($ticket->getLinkPayment($ticket->paymentMethod));
+});
 
 Route::group(['middleware' => 'guest'], function() {
     Route::get('/sign-in', 'AuthController@loginPage')->name('sign-in');
