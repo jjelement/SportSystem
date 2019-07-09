@@ -1,5 +1,4 @@
 @extends('layouts.template')
-
 @section('content')
     <div class="container paddings">
         @if($success = session('success'))
@@ -42,9 +41,9 @@
                             {{ number_format($ticket->price) }} Baht
                         </td>
                         <td>
-                            @if($ticket->paymentDatetime)
-                                <small class="bg-success  px-2 py-1text-white">ชำระเงินแล้ว</small>
-                            @elseif($ticket->created_at->diffInHours(now()) <= -1)
+                            @if($ticket->transaction)
+                                <small class="bg-success px-2 py-1 text-white">ชำระเงินแล้ว</small>
+                            @elseif($ticket->isExpired())
                                 <small class="bg-danger px-2 py-1 text-white">หมดอายุ</small>
                             @else
                                 <small class="bg-danger px-2 py-1 text-white">ยังไม่ชำระเงิน</small>
@@ -54,7 +53,7 @@
                             <a href="{{ route('ticket.show', $ticket->id) }}" class="btn btn-info btn-sm">
                                 <i class="fa fa-search"></i> View
                             </a>
-                            @if(!$ticket->paymentDatetime)
+                            @if(!$ticket->transaction)
                                 <form action="{{ route('ticket.remove', $ticket->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure to cancel this ticket ?')">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">

@@ -18,7 +18,7 @@ class TicketController extends Controller
     }
 
     public function actionCancelTicket(Ticket $ticket) {
-        if(!$ticket->paymentDatetime) {
+        if(!$ticket->transaction) {
             $ticket->delete();
             return redirect()->route('ticket')->with('success', 'Cancel ticket success.');
         }
@@ -26,7 +26,14 @@ class TicketController extends Controller
     }
 
     public function actionChoosePaymentMethod(Request $request, Ticket $ticket) {
-        $ticket->update(['paymentMethod' => $request->method]);
+        if(!$ticket->isExpired()) {
+            if($request->method == 'credit_card') {
+                return $ticket->getLinkPayment($request->method);
+            } elseif($request->method == 'qr_code') {
+                return $ticket->getLinkPayment($request->method);
+            }
+            session()->put('payment_method', $request->method);
+        }
         return redirect()->route('ticket.show', $ticket->id);
     }
 }

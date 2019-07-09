@@ -18,13 +18,12 @@ class CreateTicketsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('event_id');
             $table->string('deliveryMethod');
+            $table->decimal('price');
             $table->unsignedBigInteger('district_id')->nullable();
             $table->text('address')->nullable();
-            $table->decimal('price');
-            $table->string('paymentMethod')->nullable();
-            $table->dateTime('paymentDatetime')->nullable();
+            $table->string('qrCodeTransactionId')->nullable();
+            $table->string('creditCardTransactionId')->nullable();
             $table->timestamps();
-
 
             $table->foreign('user_id')
                 ->references('id')->on('users')

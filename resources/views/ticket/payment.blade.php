@@ -1,38 +1,41 @@
+@inject('Transaction', 'App\Models\Transaction')
 <div class="panel-box block-form mt-4">
     <div class="titles mb-1">
-        <h4>Payment</h4>
+        <h4>{{ Str::title(str_replace('_', ' ', session()->get('payment_method', 'Payment'))) }}</h4>
     </div>
     <div class="info-panel">
-        @if(!$ticket->paymentMethod)
+        @if(!session()->get('payment_method'))
             <form action="{{ route('ticket.choose-method', $ticket->id) }}" method="POST">
                 @csrf
                 <div class="row">
                     <div class="col-sm-3">
-                        <button type="submit" class="btn btn-success btn-block" name="method" value="credit_card">Credit Card</button>
+                        <button type="submit" class="btn btn-success btn-block" name="method" value="{{ $Transaction::METHOD_CREDIT_CARD }}">Credit Card</button>
                     </div>
                     <div class="col-sm-3">
-                        <button type="submit" class="btn btn-info  btn-block disabled" name="method" value="qr_code">QR Code</button>
+                        <button type="submit" class="btn btn-info  btn-block disabled" name="method" value="{{ $Transaction::METHOD_QR_CODE }}">QR Code</button>
                     </div>
                     <div class="col-sm-3">
-                        <button type="submit" class="btn btn-warning  btn-block disabled" name="method" value="internet_banking">Internet Banking</button>
+                        <button type="submit" class="btn btn-warning  btn-block disabled" name="method" value="{{ $Transaction::METHOD_IBANKING }}">Internet Banking</button>
                     </div>
                     <div class="col-sm-3">
-                        <button type="submit" class="btn btn-default  btn-block disabled" name="method" value="transfer">Transfer</button>
+                        <button type="submit" class="btn btn-default  btn-block disabled" name="method" value="{{ $Transaction::METHOD_TRANSFER }}">Transfer</button>
                     </div>
                 </div>
             </form>
         @else
-            @switch($ticket->paymentMethod)
-                @case('credit_card')
+            @switch(session()->get('payment_method'))
+                @case($Transaction::METHOD_CREDIT_CARD)
                 <form action="#">
                     asd
                 </form>
                 @break
-                @case('qr_code')
+                @case($Transaction::METHOD_QR_CODE)
                 @break
-                @case('internet_banking')
+                @case($Transaction::METHOD_IBANKING)
                 @break
-                @case('transfer')
+                @case($Transaction::METHOD_TRANSFER)
+                @break
+                @default
                 @break
             @endswitch
             <form action="{{ route('ticket.choose-method', $ticket->id) }}" method="POST" class="text-center">
