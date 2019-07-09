@@ -67,7 +67,7 @@
                             <p>
                                 <b>Payment Method</b>
                                 <span>
-                                    @switch($ticket->paymentMEthod)
+                                    @switch($ticket->paymentMethod)
                                         @case($Ticket::METHOD_CREDIT_CARD)
                                             Credit Card
                                         @break
